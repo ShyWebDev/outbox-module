@@ -1,0 +1,9 @@
+# Spring Boot 설정
+spring:
+  application:
+    name: outbox
+
+  # 로그 설정 (P6Spy 로깅 활성화)
+  logging:
+    level:
+      com.p6spy: DEBUG  # P6Spy 로그 레벨을 DEBUG로 설정하여 SQL 쿼리 출력
