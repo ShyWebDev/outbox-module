@@ -1,6 +1,5 @@
 package com.dev.hobby.outbox.application.command.command;
 
-import com.dev.hobby.outbox.common.OutboxFixedFields;
 import lombok.Builder;
 import lombok.Data;
 
@@ -13,6 +12,8 @@ public class CreateOutboxCommand  {
     private String aggregateType;
     private String aggregateId;
     private String eventType;
+    private String payload;
+    private String callBackUrl;
 
     private LocalDateTime createAt;
 }

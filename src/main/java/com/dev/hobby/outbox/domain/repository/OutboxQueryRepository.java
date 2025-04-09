@@ -6,6 +6,8 @@ import java.util.Optional;
 
 public interface OutboxQueryRepository {
 
-    void save(Outbox userDomain);
+    Outbox save(Outbox userDomain);
     Optional<Outbox> findByOutboxId(String outboxId);
+
+    Optional<Outbox> findByAggregateId(String aggregateId);
 }

@@ -6,13 +6,12 @@ package com.dev.hobby.outbox.domain.model;
  * 외부 구현(JPA, MongoDB 등)의 상태값과 일관성을 유지합니다.
  */
 public enum OutboxStatus {
-    /** 발행 대기 중인 이벤트 */
-    PENDING,
-
-    /** 정상적으로 발행 완료된 이벤트 */
-    SENT,
-
-    /** 발행 중 오류가 발생한 이벤트 */
+    RECEIVED,
+    PROCESSING,
+    PUBLISHING,
+    PUBLISHED,
     FAILED,
-    SUCCESS
+    DEAD,
+    SUCCESS,
+    COMPLETED,
 }

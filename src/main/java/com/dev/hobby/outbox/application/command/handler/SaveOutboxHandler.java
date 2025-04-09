@@ -6,7 +6,6 @@ import com.dev.hobby.outbox.domain.model.OutboxStatus;
 import com.dev.hobby.outbox.domain.service.OutboxDomainService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ObjectUtils;
 
 import java.time.LocalDateTime;
 
@@ -25,17 +24,16 @@ public class SaveOutboxHandler {
         outboxDomainService.createOutbox(createOutboxCommand, OutboxStatus.RECEIVED);
     }
 
-    public void processProcessingHandler(String outboxId) {
+    public void processProcessingHandlerByAggregateId(String aggregateId) {
         UpdateHandler(UpdateOutboxCommand.builder()
-                .outboxId(outboxId)
+                .aggregateId(aggregateId)
                 .status(OutboxStatus.PROCESSING)
                 .build());
     }
 
-    public void processSuccessHandler(String outboxId) {
+    public void processSuccessHandlerByAggregateId(String aggregateId) {
         UpdateHandler(UpdateOutboxCommand.builder()
-                .outboxId(outboxId)
-                .version(0)
+                .aggregateId(aggregateId)
                 .status(OutboxStatus.SUCCESS)
                 .retryCount(0)
                 .lastError(null)
@@ -43,30 +41,37 @@ public class SaveOutboxHandler {
                 .build());
     }
 
-    public void processFailedHandler(String outboxId, String lastError) {
+    public void processFailedHandlerByAggregateId(String aggregateId, String lastError) {
         UpdateHandler(UpdateOutboxCommand.builder()
-                .outboxId(outboxId)
-                .version(0)
-                .status(OutboxStatus.SUCCESS)
+                .aggregateId(aggregateId)
+                .status(OutboxStatus.FAILED)
                 .retryCount(0)
                 .lastError(lastError)
                 .nextRetryAt(LocalDateTime.now().plusMinutes(1))
                 .build());
     }
 
-    public void processPublishingHandler(String outboxId) {
+    public void processPublishingHandlerByAggregateId(String aggregateId) {
         UpdateHandler(UpdateOutboxCommand.builder()
-                .outboxId(outboxId)
+                .aggregateId(aggregateId)
                 .status(OutboxStatus.PUBLISHING)
-                .retryCount(0)
                 .build());
     }
 
-    public void processPublishedHandler(String outboxId) {
+    public void processPublishedHandlerByAggregateId(String aggregateId) {
         UpdateHandler(UpdateOutboxCommand.builder()
-                .outboxId(outboxId)
+                .aggregateId(aggregateId)
                 .status(OutboxStatus.PUBLISHED)
+                .build());
+    }
+
+    public void processCompletedHandlerByAggregateId(String aggregateId) {
+        UpdateHandler(UpdateOutboxCommand.builder()
+                .aggregateId(aggregateId)
+                .status(OutboxStatus.COMPLETED)
                 .retryCount(0)
+                .lastError(null)
+                .nextRetryAt(null)
                 .build());
     }
 

@@ -15,6 +15,6 @@ public class OutboxSyncScheduler {
 
     @Scheduled(fixedDelay = 3000)
     public void sync() {
-        outboxSyncService.syncOutbox();
+        //outboxSyncService.syncOutbox();
     }
 }

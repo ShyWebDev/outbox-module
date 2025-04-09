@@ -12,23 +12,28 @@ import java.time.LocalDateTime;
  */
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
-@Document(collection = "outbox_event")
+@Document(collection = "outbox")
 public class OutboxDocument {
 
     /** Mongo용 ID */
     @Id
     private String id;
 
+    private String outboxId;
     private String aggregateType;
     private String aggregateId;
     private String eventType;
-    private String payload;
+
     private String status;
-    private int retryCount;
-    private String errorReason;
+    private Integer retryCount;
+    private LocalDateTime nextRetryAt;
+    private String lastError;
+
+    private String callbackUrl;
+
     private LocalDateTime createdAt;
-    private LocalDateTime publishedAt;
+    private LocalDateTime updatedAt;
 }

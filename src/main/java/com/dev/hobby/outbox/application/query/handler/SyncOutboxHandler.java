@@ -1,8 +1,9 @@
-package com.dev.hobby.outbox.application.handler;
+package com.dev.hobby.outbox.application.query.handler;
 
-import com.dev.hobby.outbox.application.service.OutboxDomainService;
+import com.dev.hobby.outbox.application.query.command.GetOutboxCommand;
+import com.dev.hobby.outbox.application.query.command.SyncOutboxCreateCmd;
 import com.dev.hobby.outbox.domain.model.Outbox;
-import lombok.NoArgsConstructor;
+import com.dev.hobby.outbox.domain.service.OutboxQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -13,11 +14,13 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RequiredArgsConstructor
-public class OutboxHandler {
+public class SyncOutboxHandler {
 
-    private final OutboxDomainService outboxDomainService;
+    private final OutboxQueryService outboxQueryService;
 
-    public void handler(Outbox outbox) {
-        outboxDomainService.saveOutbox(outbox);
+    public void handle(SyncOutboxCreateCmd syncOutboxCreateCmd) {
+        outboxQueryService.save(syncOutboxCreateCmd);
     }
+
+
 }

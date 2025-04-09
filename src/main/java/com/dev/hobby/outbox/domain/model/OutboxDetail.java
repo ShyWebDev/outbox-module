@@ -1,6 +1,7 @@
 package com.dev.hobby.outbox.domain.model;
 
-import lombok.*; // Lombok으로 기본 메서드 자동 생성
+import lombok.*;
+
 import java.time.LocalDateTime;
 
 /**
@@ -9,8 +10,8 @@ import java.time.LocalDateTime;
  */
 @Getter // Getter 생성
 @Setter // Setter 생성
-@NoArgsConstructor // 기본 생성자
-@AllArgsConstructor // 전체 생성자
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder // 빌더 생성
 public class OutboxDetail {
 

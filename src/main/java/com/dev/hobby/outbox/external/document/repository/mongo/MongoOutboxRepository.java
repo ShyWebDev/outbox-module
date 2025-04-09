@@ -9,4 +9,5 @@ import java.util.Optional;
 public interface MongoOutboxRepository extends MongoRepository<OutboxDocument, String> {
 
     Optional<OutboxDocument> findByOutboxId(String outboxId);
+    Optional<OutboxDocument> findByAggregateId(String aggregateId);
 }

@@ -1,7 +1,10 @@
 package com.dev.hobby.outbox.common;
 
 import jakarta.persistence.Embeddable;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 @Embeddable
 @Builder

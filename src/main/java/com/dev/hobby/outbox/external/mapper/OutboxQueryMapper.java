@@ -1,6 +1,8 @@
 package com.dev.hobby.outbox.external.mapper;
 
+import com.dev.hobby.outbox.application.query.command.SyncOutboxCreateCmd;
 import com.dev.hobby.outbox.domain.model.Outbox;
+import com.dev.hobby.outbox.domain.model.OutboxStatus;
 import com.dev.hobby.outbox.external.document.OutboxDocument;
 import lombok.experimental.UtilityClass;
 
@@ -10,7 +12,7 @@ import lombok.experimental.UtilityClass;
  * Clean Architecture: 도메인은 메시징 시스템에 직접 의존하지 않음
  */
 @UtilityClass
-public class OutboxEventMapper {
+public class OutboxQueryMapper {
 
 
     public static OutboxDocument toDocument(Outbox domain) {
@@ -19,14 +21,13 @@ public class OutboxEventMapper {
                 .aggregateType(domain.getAggregateType())
                 .aggregateId(domain.getAggregateId())
                 .eventType(domain.getEventType())
-                .version(domain.getVersion())
-                .status(domain.getStatus())
+                .status(domain.getStatus().name())
                 .retryCount(domain.getRetryCount())
+                .nextRetryAt(domain.getNextRetryAt())
                 .lastError(domain.getLastError())
+                .callbackUrl(domain.getCallbackUrl())
                 .createdAt(domain.getCreatedAt())
                 .updatedAt(domain.getUpdatedAt())
-                .nextRetryAt(domain.getNextRetryAt())
-                .syncedAt(domain.getSyncedAt())
                 .build();
     }
 
@@ -36,14 +37,29 @@ public class OutboxEventMapper {
                 .aggregateType(document.getAggregateType())
                 .aggregateId(document.getAggregateId())
                 .eventType(document.getEventType())
-                .version(document.getVersion())
-                .status(document.getStatus())
+                .status(OutboxStatus.valueOf(document.getStatus()))
                 .retryCount(document.getRetryCount())
+                .nextRetryAt(document.getNextRetryAt())
                 .lastError(document.getLastError())
+                .callbackUrl(document.getCallbackUrl())
                 .createdAt(document.getCreatedAt())
                 .updatedAt(document.getUpdatedAt())
-                .nextRetryAt(document.getNextRetryAt())
-                .syncedAt(document.getSyncedAt())
+                .build();
+    }
+
+    public static Outbox toDomain(SyncOutboxCreateCmd command) {
+        return Outbox.builder()
+                .outboxId(command.getOutboxId())
+                .aggregateType(command.getAggregateType())
+                .aggregateId(command.getAggregateId())
+                .eventType(command.getEventType())
+                .status(OutboxStatus.valueOf(command.getStatus()))
+                .retryCount(command.getRetryCount())
+                .nextRetryAt(command.getNextRetryAt())
+                .lastError(command.getLastError())
+                .callbackUrl(command.getCallbackUrl())
+                .createdAt(command.getCreatedAt())
+                .updatedAt(command.getUpdatedAt())
                 .build();
     }
 

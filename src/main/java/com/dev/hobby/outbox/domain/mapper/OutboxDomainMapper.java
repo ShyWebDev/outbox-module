@@ -1,7 +1,6 @@
 package com.dev.hobby.outbox.domain.mapper;
 
 import com.dev.hobby.outbox.application.command.command.CreateOutboxCommand;
-import com.dev.hobby.outbox.application.command.command.UpdateOutboxCommand;
 import com.dev.hobby.outbox.domain.model.Outbox;
 import com.dev.hobby.outbox.domain.model.OutboxStatus;
 import lombok.experimental.UtilityClass;
@@ -22,7 +21,7 @@ public class OutboxDomainMapper {
                 .eventType(createOutboxCommand.getEventType())
                 .status(outboxStatus)
                 .retryCount(0)
-                .createdAt(createOutboxCommand.getCreateAt())
+                //.createdAt(createOutboxCommand.getCreateAt())
                 .build();
     }
 
